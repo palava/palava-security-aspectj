@@ -29,7 +29,11 @@ abstract aspect AbstractSecurityAspect {
     
     after() returning (Injector injector): createInjector() {
         LOG.trace("Injecting members on {}", this);
-        injector.injectMembers(this);
+        if (provider == null) {
+            injector.injectMembers(this);
+        } else {
+            throw new IllegalStateException("An injector has already been created");
+        }
     }
     
 }
