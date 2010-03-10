@@ -20,18 +20,14 @@
 package de.cosmocode.palava.security.aspectj;
 
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.Provider;
 
-abstract aspect AbstractSecurityAspect {
+import de.cosmocode.palava.core.aop.AbstractPalavaAspect;
 
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractSecurityAspect.class);
+abstract aspect AbstractSecurityAspect extends AbstractPalavaAspect {
 
     private Provider<Subject> provider;
 
@@ -44,15 +40,4 @@ abstract aspect AbstractSecurityAspect {
         return provider.get();
     }
 
-    pointcut createInjector(): call(Injector Guice.createInjector(..));
-    
-    after() returning (Injector injector): createInjector() {
-        LOG.trace("Injecting members on {}", this);
-        if (provider == null) {
-            injector.injectMembers(this);
-        } else {
-            throw new IllegalStateException("An injector has already been created");
-        }
-    }
-    
 }
