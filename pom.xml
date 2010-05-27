@@ -8,9 +8,9 @@
   <groupId>de.cosmocode.palava</groupId>
   <artifactId>palava-security-aspectj</artifactId>
   <name>Palava Security AspectJ</name>
-  <version>1.0.0</version>
+  <version>1.1-SNAPSHOT</version>
   <scm>
-    <developerConnection>scm:svn:https://palava.svn.cosmocode.de/palava-security-aspectj/tags/1.0.0</developerConnection>
+    <developerConnection>scm:svn:https://palava.svn.cosmocode.de/palava-security-aspectj/trunk</developerConnection>
   </scm>
   <build>
     <plugins>
