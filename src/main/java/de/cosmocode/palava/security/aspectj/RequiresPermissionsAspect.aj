@@ -29,11 +29,11 @@ final aspect RequiresPermissionsAspect extends AbstractSecurityAspect issingleto
     
     before(RequiresPermissions permissions): requiresPermissions() && @annotation(permissions) {
         final Subject currentUser = getCurrentUser();
-        final String permission = permissions.value();
-        LOG.trace("Checking {} for permission {}", currentUser, permission);
-        currentUser.checkPermission(permission);
-        LOG.trace("{} has permission {} and is therefore allowed to access {}", new Object[] {
-            currentUser, permission, thisJoinPointStaticPart.getSignature()
+        final String value = permissions.value();
+        LOG.trace("Checking {} for permissions {}", currentUser, value);
+        currentUser.checkPermissions(value.split(","));
+        LOG.trace("{} has permissions {} and is therefore allowed to access {}", new Object[] {
+            currentUser, value, thisJoinPointStaticPart.getSignature()
         });
     }
     

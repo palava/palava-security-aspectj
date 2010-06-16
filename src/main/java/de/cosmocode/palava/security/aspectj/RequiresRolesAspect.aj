@@ -16,6 +16,8 @@
 
 package de.cosmocode.palava.security.aspectj;
 
+import java.util.Arrays;
+
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -29,11 +31,11 @@ final aspect RequiresRolesAspect extends AbstractSecurityAspect {
     
     before(RequiresRoles roles): requiresRoles() && @annotation(roles) {
         final Subject currentUser = getCurrentUser();
-        final String role = roles.value();
-        LOG.trace("Checking {} for role {}", currentUser, role);
-        currentUser.checkRole(role);
-        LOG.trace("{} has role {} and is therefore allowed to access {}", new Object[] {
-            currentUser, role, thisJoinPointStaticPart.getSignature()
+        final String value = roles.value();
+        LOG.trace("Checking {} for roles {}", currentUser, value);
+        currentUser.checkRoles(Arrays.asList(value.split(",")));
+        LOG.trace("{} has roles {} and is therefore allowed to access {}", new Object[] {
+            currentUser, value, thisJoinPointStaticPart.getSignature()
         });
     }
     
