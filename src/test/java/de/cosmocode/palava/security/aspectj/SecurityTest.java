@@ -16,6 +16,8 @@
 
 package de.cosmocode.palava.security.aspectj;
 
+import java.util.Arrays;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -51,9 +53,9 @@ public final class SecurityTest {
                 final Subject subject = EasyMock.createMock("subject", Subject.class);
                 EasyMock.expect(subject.isAuthenticated()).andStubReturn(false);
                 EasyMock.expect(subject.isRemembered()).andStubReturn(false);
-                subject.checkPermission("access");
+                subject.checkPermissions("access");
                 EasyMock.expectLastCall().andStubThrow(new AuthorizationException());
-                subject.checkRole("admin");
+                subject.checkRoles(Arrays.asList("admin"));
                 EasyMock.expectLastCall().andStubThrow(new AuthorizationException());
                 EasyMock.replay(subject);
                 binder.bind(Subject.class).toInstance(subject);  

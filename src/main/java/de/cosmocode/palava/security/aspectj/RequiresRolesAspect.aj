@@ -33,6 +33,7 @@ final aspect RequiresRolesAspect extends AbstractSecurityAspect {
         final Subject currentUser = getCurrentUser();
         final String value = roles.value();
         LOG.trace("Checking {} for roles {}", currentUser, value);
+        // TODO add trimming
         currentUser.checkRoles(Arrays.asList(value.split(",")));
         LOG.trace("{} has roles {} and is therefore allowed to access {}", new Object[] {
             currentUser, value, thisJoinPointStaticPart.getSignature()

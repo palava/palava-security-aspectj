@@ -31,6 +31,7 @@ final aspect RequiresPermissionsAspect extends AbstractSecurityAspect issingleto
         final Subject currentUser = getCurrentUser();
         final String value = permissions.value();
         LOG.trace("Checking {} for permissions {}", currentUser, value);
+        // TODO add trimming
         currentUser.checkPermissions(value.split(","));
         LOG.trace("{} has permissions {} and is therefore allowed to access {}", new Object[] {
             currentUser, value, thisJoinPointStaticPart.getSignature()
